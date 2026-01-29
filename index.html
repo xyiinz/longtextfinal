@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regita Pramesti Cahyani</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:
+    radial-gradient(circle at 10% 20%, #ffd1e8, transparent 45%),
+    radial-gradient(circle at 90% 30%, #ffc2de, transparent 45%),
+    radial-gradient(circle at 50% 85%, #ff9acb, transparent 50%),
+    linear-gradient(135deg, #ff7bbd, #ff5aa7, #ff8fc7);
+  background-size:200% 200%;
+  animation:aurora 22s ease infinite;
+  overflow:hidden;
+  touch-action:manipulation;
+}
+
+@keyframes aurora{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* OPENING */
+#opening{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at top,#ffd1e8,#ff9acb);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+  overflow:hidden;
+}
+
+.opening-content{
+  text-align:center;
+  animation:floatText 3s ease-in-out infinite;
+}
+
+.opening-content h2{
+  margin:0;
+  animation:glowText 2.4s ease-in-out infinite;
+}
+
+.opening-content p{
+  margin-top:12px;
+  font-size:.95rem;
+  color:#ff4f9a;
+  letter-spacing:2px;
+  animation:pulse 1.4s infinite;
+}
+
+@keyframes glowText{
+  0%,100%{text-shadow:none}
+  50%{text-shadow:0 0 22px rgba(255,79,154,.8)}
+}
+
+@keyframes floatText{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
+
+@keyframes pulse{
+  0%,100%{opacity:.4}
+  50%{opacity:1}
+}
+
+/* HEART */
+.heart{
+  position:absolute;
+  width:14px;
+  height:14px;
+  background:rgba(255,255,255,.6);
+  transform:rotate(45deg);
+  animation:rise 7s linear infinite;
+}
+
+.heart::before,.heart::after{
+  content:'';
+  position:absolute;
+  width:14px;
+  height:14px;
+  background:inherit;
+  border-radius:50%;
+}
+
+.heart::before{top:-7px}
+.heart::after{left:-7px}
+
+@keyframes rise{
+  0%{transform:translateY(0) rotate(45deg);opacity:0}
+  15%{opacity:.7}
+  100%{transform:translateY(-120vh) rotate(45deg);opacity:0}
+}
+
+/* CONTAINER */
+.container{
+  position:relative;
+  width:92%;
+  max-width:420px;
+  height:85vh;
+  background:rgba(255,255,255,.86);
+  border-radius:34px;
+  box-shadow:0 30px 90px rgba(255,79,154,.35);
+  overflow:hidden;
+  animation:softPulse 7s ease-in-out infinite;
+}
+
+@keyframes softPulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.015)}
+}
+
+.container::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,#ffe1ef,#ffd6ea,#fff0f7);
+  background-size:400% 400%;
+  animation:bgMove 12s ease infinite;
+  z-index:-2;
+}
+
+@keyframes bgMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* BLOBS */
+.blob{
+  position:absolute;
+  width:260px;
+  height:260px;
+  background:radial-gradient(circle,#ff8fc7,#ff5aa7);
+  filter:blur(80px);
+  opacity:.25;
+  animation:blobMove 18s ease-in-out infinite alternate;
+  z-index:-1;
+}
+
+.blob.one{top:-80px;left:-60px}
+.blob.two{bottom:-100px;right:-80px;animation-delay:3s}
+
+@keyframes blobMove{
+  from{transform:translate(0,0)}
+  to{transform:translate(120px,80px)}
+}
+
+@media(max-width:600px){
+  .blob{display:none}
+}
+
+/* HEADER */
+header{
+  text-align:center;
+  padding:26px 20px 10px;
+}
+
+header h1{
+  margin:0;
+  font-size:2.4rem;
+  background:linear-gradient(90deg,#ff4f9a,#ff85c2);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+header p{
+  color:#ff6fb1;
+  font-size:.95rem;
+  margin-top:8px;
+}
+
+/* SLIDER */
+.slider{
+  height:calc(100% - 150px);
+  overflow:hidden;
+}
+
+.slides{
+  display:flex;
+  height:100%;
+  transition:transform .9s cubic-bezier(.77,0,.18,1);
+}
+
+#audioControl{
+  position:fixed;
+  top:20px;
+  right:20px;
+  width:54px;
+  height:54px;
+  background:rgba(255,255,255,.85);
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow:0 12px 30px rgba(255,79,154,.35);
+  cursor:pointer;
+  z-index:9999;
+  transition:.35s ease;
+}
+
+#audioControl:hover{
+  transform:scale(1.08);
+}
+
+#audioIcon{
+  font-size:1.4rem;
+}
+
+#audioControl.playing{
+  animation:beat 1.2s infinite;
+}
+
+@keyframes beat{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.12)}
+}
+
+
+@keyframes pop{
+  from{transform:scale(.8);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+
+.slide{
+  min-width:100%;
+  padding:26px 28px;
+  font-size:1rem;
+  line-height:2;
+  color:#333;
+  opacity:0;
+  transform:translateY(20px);
+  transition:.6s ease;
+}
+
+.slide.active{
+  opacity:1;
+  transform:none;
+}
+
+/* FINAL SLIDE */
+.slide.final{
+  text-align:center;
+  animation:finalFloat 3s ease-in-out infinite;
+}
+
+@keyframes finalFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+}
+
+.controls{
+  position:absolute;
+  bottom:20px;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:16px;
+}
+
+
+.dots{
+  display:flex;
+  gap:10px;
+}
+
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#ffc1dd;
+  transition:.3s;
+}
+
+.dot.active{
+  background:#ff4f9a;
+  transform:scale(1.4);
+}
+
+.nav-buttons{
+  display:flex;
+  gap:16px;
+}
+
+
+button{
+  border:none;
+  background:linear-gradient(135deg,#ff4f9a,#ff87c2);
+  color:#fff;
+  padding:12px 26px;
+  border-radius:999px;
+  font-size:.9rem;
+  cursor:pointer;
+  box-shadow:0 10px 28px rgba(255,79,154,.35);
+}
+
+button.back{
+  background:transparent;
+  color:#ff4f9a;
+  border:2px solid #ff4f9a;
+  box-shadow:none;
+}
+
+button.back:disabled{
+  opacity:.4;
+}
+
+
+</style>
+</head>
+<body>
+
+<audio id="music" src="newwest.mp3" loop playsinline preload="auto"></audio>
+
+
+<div id="opening">
+  <div class="opening-content">
+    <h2>Regita Pramesti Cahyani</h2>
+    <p>ketuk dimana saja untuk mulai baca</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="blob one"></div>
+  <div class="blob two"></div>
+
+<header>
+<h1>Untuk Kamu</h1>
+<p>❤️ ❤️ ❤️</p>
+</header>
+
+<div class="slider">
+<div class="slides" id="slides">
+
+        <div class="slide active" data-text="Halo sayang. Kalau kamu lagi baca tulisan panjang ini, aku harap kamu lagi baik-baik aja ya. Sehat, nggak terlalu capek, dan semoga masih bisa senyum walaupun lagi banyak pikiran."></div>
+        
+        <div class="slide" data-text="Sebelumnya aku cuma mau bilang satu hal dulu. Makasih ya, sayang. Makasih karena kamu pernah sayang sama aku, pernah cinta sama aku, dan pernah nerima aku di hidup kamu. Padahal awalnya kita ketemu juga nggak direncanain, cuma iseng, cuma gabut. Tapi entah kenapa, dari semua hal yang awalnya nggak serius itu, perasaanku ke kamu malah jadi serius banget."></div>
+        
+        <div class="slide" data-text="Aku percaya kamu juga mulai sayang sama aku. Dan jujur aja, aku juga udah taruh harapan besar ke kamu. Aku percaya sama kamu Aku secinta itu sama kamu."></div>
+        
+        <div class="slide" data-text="Aku sayang sama kamu bukan karena hal yang ribet. Aku sayang karena aku nyaman. Karena kebiasaan kita call-an di Discord, karena obrolan kecil yang lama-lama jadi penting, dan terutama karena usaha kamu buat ketemu aku. Mungkin buat kamu itu hal biasa, tapi buat aku itu bukti, dan dari situ perasaanku makin dalam."></div>
+        
+        <div class="slide" data-text="Kalau kamu pernah mikir aku cuma berlebihan, atau cuma love bombing, inget ya… cerita yang kamu ceritain ke aku setelah kita ketemu Aku nggak main-main Aku bener-bener tulus, karena aku bener-bener sayang sama kamu."></div>
+        
+        <div class="slide" data-text="Kalau nanti kita lost contact, aku nggak bohong, aku bakal tetap berharap. Aku bakal nunggu kabar kamu Bukan karena aku nggak bisa move on, tapi karena aku percaya sama kamu dan sama rasa yang pernah kita punya."></div>
+        
+        <div class="slide" data-text="Maaf ya sayang… Aku tau aku bukan orang yang selalu ceria.Kamu pengen aku yang bisa bikin kamu semangat, tapi nyatanya aku malah sering cengeng, sering nangis, dan tanpa sadar bikin kamu sedih. Tapi sumpah, aku nangis bukan karena lemah Aku nangis karena aku sayang banget sama kamu."></div>
+        
+        <div class="slide" data-text="Ke depannya, aku mungkin nggak tau kamu lagi ngapain, kondisi kamu gimana, atau bahkan nggak bisa denger suara kamu lagi. Aku cuma punya satu harapan keci, kalau bisa, tolong kabarin aku. Apa pun itu.Kabar baik atau kabar buruk, aku terima Yang penting kamu jujur."></div>
+        
+        <div class="slide" data-text="Kalau kamu mau baikan, mau berjuang lagi di sana, aku ngerti. Kalau kamu mau lepasin aku dari hidup kamu, bilang aja. Aku bakal sakit, tapi aku hargain kejujuran kamu. Tapi kalau ternyata kabar yang datang itu baik…jujur, aku bakal bahagia banget Dan aku bakal makin sayang sama kamu."></div>
+        
+        <div class="slide" data-text="Kalau kamu pernah mikir aku nggak kuat nunggu atau aku bakal nyari yang lain, menurut aku itu salah. Aku udah nunjukin semua rasa sayang aku ke kamu.Dan karena itu, aku bakal kuat nunggu kamu."></div>
+        
+        <div class="slide" data-text="Jangan terlalu mikirin aku ya.Fokus aja ke masalah kamu, ke hidup kamu. Aku di sini cuma bisa support dan doain kamu dari belakang.Walaupun kamu nggak lihat, aku tetap peduli."></div>
+        
+        <div class="slide" data-text="Maaf kalau aku kedengeran drama.Aku juga heran, aku nggak pernah sedrama ini ke siapa pun. Tapi ke kamu, aku cuma pengen jujur.Aku cuma pengen kamu tau kalau aku sayang banget sama kamu. Aku harap kamu baik-baik aja di sana Semoga kamu selalu dilindungi. Dan apa pun yang terjadi nanti… aku sayang kamu.aku cinta kamu. I love you, sayang."></div>
+        
+
+        <div class="slide final" data-text="Aku harap kamu bakal baik-baik aja ya di sana. Semoga kamu dilindungi :). Aku sayang banget sama kamu.Aku cinta banget sama kamu. Mungkin saking aku sayang dan cinta sama kamu, kamu kecewain atau kamu jahatin aku pun, aku tetap bakal sayang sama kamu :)). i love you sayang!!"></div>
+
+</div>
+</div>
+
+<div id="audioControl" class="paused">
+  <span id="audioIcon">🎵</span>
+</div>
+
+<div class="controls">
+<div class="dots" id="dots"></div>
+<div class="nav-buttons">
+    <button class="back" onclick="prevSlide()">Back</button>
+    <button onclick="nextSlide()">Next</button>
+  </div>  
+</div>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const slidesWrap = document.getElementById('slides');
+const dotsWrap = document.getElementById('dots');
+const music = document.getElementById('music');
+const opening = document.getElementById('opening');
+const audioControl = document.getElementById('audioControl');
+const audioIcon = document.getElementById('audioIcon');
+
+let index = 0;
+let typing = false;
+let typingInterval;
+let fullText = '';
+let isPlaying = false;
+
+// Inisialisasi Dot
+slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    dotsWrap.appendChild(d);
+});
+const dots = document.querySelectorAll('.dot');
+
+// Fungsi Ketik Teks
+function typeText(slide) {
+    clearInterval(typingInterval);
+    typing = true;
+    slide.innerHTML = '';
+    fullText = slide.dataset.text;
+    let i = 0;
+    typingInterval = setInterval(() => {
+        slide.innerHTML += fullText[i] === '\n' ? '<br>' : fullText[i];
+        i++;
+        if (i >= fullText.length) {
+            clearInterval(typingInterval);
+            typing = false;
+        }
+    }, 22);
+}
+
+function skipTyping() {
+    if (!typing) return;
+    clearInterval(typingInterval);
+    slides[index].innerHTML = fullText.replace(/\n/g, '<br>');
+    typing = false;
+}
+
+function update() {
+    slidesWrap.style.transform = `translateX(-${index * 100}%)`;
+    slides.forEach(s => s.classList.remove('active'));
+    slides[index].classList.add('active');
+    dots.forEach(d => d.classList.remove('active'));
+    dots[index].classList.add('active');
+    typeText(slides[index]);
+    document.querySelector('.back').disabled = index === 0;
+}
+
+function nextSlide() {
+    if (typing) { skipTyping(); return; }
+    if (index < slides.length - 1) { index++; update(); }
+}
+
+function prevSlide() {
+    if (typing) { skipTyping(); return; }
+    if (index > 0) { index--; update(); }
+}
+
+function playMusic() {
+    // Reset audio ke detik 0 jika sempat macet
+    music.currentTime = 0; 
+    
+    // Paksa volume
+    music.volume = 0.5;
+    
+    let playPromise = music.play();
+
+    if (playPromise !== undefined) {
+        playPromise.then(() => {
+            console.log("Musik berhasil diputar!");
+            isPlaying = true;
+            audioControl.classList.add('playing');
+            audioIcon.textContent = '⏸';
+        }).catch(error => {
+            console.log("Gagal putar: ", error);
+            // Jika gagal, kita coba putar lagi saat interaksi berikutnya
+            isPlaying = false;
+        });
+    }
+}
+
+function toggleAudio() {
+    if (music.paused) {
+        music.play();
+        audioControl.classList.add('playing');
+        audioIcon.textContent = '⏸';
+    } else {
+        music.pause();
+        audioControl.classList.remove('playing');
+        audioIcon.textContent = '🎵';
+    }
+}
+
+// Click to Start
+opening.addEventListener('click', () => {
+    playMusic(); // Putar musik saat klik pertama
+    opening.style.transition = '1s ease';
+    opening.style.opacity = 0;
+    opening.style.transform = 'scale(1.2)';
+    setTimeout(() => { opening.remove(); }, 900);
+});
+
+audioControl.addEventListener('click', toggleAudio);
+
+// Heart Generator
+setInterval(() => {
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.style.left = Math.random() * 100 + '%';
+    h.style.animationDuration = 5 + Math.random() * 5 + 's';
+    if(opening) opening.appendChild(h);
+    setTimeout(() => h.remove(), 10000);
+}, 300);
+
+update();
+</script>
+</body>
+</html>
